@@ -2,59 +2,53 @@ import React from 'react'
 import Input from './Input'
 import useInfo from 'src/hooks/useInfo'
 
-type Props = {
+
+export const parseCurrency = (num: number): string => num.toLocaleString("es-ar", {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2
+})
+
+interface Values {
   dolar: number,
-  blue: number,
-  values: {
-    dolar: number,
-    blue: number,
-  }
-  setType: any
-  type: "ars" | "usd"
-}
-const parseCurrency = (num: number): string => {
-  return num.toLocaleString("es-ar", {
-    minimumFractionDigits: 2
-  })
+  blue: number
 }
 
-const Card = (props: Props) => {
-
+const Card = () => {
   const { values } = useInfo()
-  const { dolar, blue }: { dolar: number, blue: number } = values
+  const { dolar, blue }: Values = values
 
   return (
     <div>
-      <div className="absolute left-1/2 z-10 mt-5  flex w-screen max-w-max -translate-x-1/2 -translate-y-1/2 px-4">
+      <div className="fixed top-16  md:top-24 left-1/2 z-10 h-[min(100%,22rem)] max-h-[22rem]   flex w-screen max-w-max -translate-x-1/2  px-4">
         <div className="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
           <div className="p-4 flex flex-col gap-5 justify-around">
-            <div className="group relative flex gap-x-6 rounded-lg text-green-700 bg-green-100  p-4 hover:bg-green-200">
+            <div className="group relative flex gap-x-6 rounded-lg text-green-500 bg-green-100  p-4 hover:bg-green-200">
               <div className="mt-1 flex text-2xl h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                 {/* <item.icon className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" /> */}
                 $
               </div>
-              <div>
-                <a href={"#"} className="font-semibold text-gray-900">
+              <div className='overflow-hidden'>
+                <div className="font-semibold text-gray-900">
                   Dolar Oficial
                   <span className="absolute inset-0" />
-                </a>
-                <p className="mt-1 text-gray-600">
+                </div>
+                <p className="mt-1 text-gray-600 overflow-x-hidden">
                   {parseCurrency(dolar)}
 
                 </p>
               </div>
             </div>
-            <div className="group relative flex gap-x-6 rounded-lg p-4 bg-blue-100 hover:bg-blue-200">
-              <div className="mt-1 text-2xl flex h-11 w-11 flex-none items-center justify-center rounded-lg text-blue-800 bg-gray-50  ">
+            <div className="group relative flex gap-x-6 rounded-lg p-4 bg-sky-100 hover:bg-sky-200">
+              <div className="mt-1 text-2xl flex h-11 w-11 flex-none items-center justify-center rounded-lg text-sky-800 bg-gray-50  ">
                 {/* <item.icon className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" /> */}
                 $
               </div>
-              <div>
-                <a href={"#"} className="font-semibold text-gray-900">
+              <div className='overflow-hidden'>
+                <div className="font-semibold text-gray-900">
                   Dolar Blue
                   <span className="absolute inset-0" />
-                </a>
-                <p className="mt-1 text-gray-600">
+                </div>
+                <p className="mt-1 text-gray-600  overflow-x-hidden">
                   {parseCurrency(blue)}
                 </p>
               </div>

@@ -26,6 +26,7 @@ interface ContextType {
   setType?: Dispatch<SetStateAction<any>>,
   converted?: any,
   setConverted?: Dispatch<SetStateAction<any>>,
+  handleChange?: any
 }
 
 
@@ -44,25 +45,22 @@ interface Valores {
 }
 
 export const ConverterProvider: FC<Props> = ({ data, children }) => {
-  const [values, setValues] = useState<Valores>({ dolar: parseInt(data.dolar.venta._text), blue: parseInt(data.blue.venta._text) })
+  const [values, setValues] = useState<Valores>({ dolar: parseFloat(data.dolar.venta._text), blue: parseFloat(data.blue.venta._text) })
   const [type, setType] = useState<"usd" | "ars">("usd")
   // const [converted, setConverted] = useState(0)
 
   const handleChange = (input: any) => {
     if (type === "usd") {
-      if (!input) return setValues({ dolar: parseInt(data.dolar.venta._text), blue: parseInt(data.blue.venta._text) })
-      if (input) return setValues({ dolar: input * parseInt(data.dolar.venta._text), blue: input * parseInt(data.blue.venta._text) })
+      if (!input) return setValues({ dolar: parseFloat(data.dolar.venta._text), blue: parseFloat(data.blue.venta._text) })
+      if (input) return setValues({ dolar: input * parseFloat(data.dolar.venta._text), blue: input * parseFloat(data.blue.venta._text) })
     }
     if (type === "ars") {
-      if (!input) return setValues({ dolar: parseInt(data.dolar.venta._text), blue: parseInt(data.blue.venta._text) })
-      if (input) return setValues({ dolar: input / parseInt(data.dolar.venta._text), blue: input / parseInt(data.blue.venta._text) })
+      if (!input) return setValues({ dolar: parseFloat(data.dolar.venta._text), blue: parseFloat(data.blue.venta._text) })
+      if (input) return setValues({ dolar: input / parseFloat(data.dolar.venta._text), blue: input / parseFloat(data.blue.venta._text) })
 
     }
   }
 
-  useEffect(() => {
-
-  }, [type])
 
   return (
     <ConverterContext.Provider value={{ handleChange, setValues, values, type, setType }}>

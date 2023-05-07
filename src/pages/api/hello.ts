@@ -3,9 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 const convert = require('xml-js')
 const axios = require('axios')
 
-type Data = {
-  name: string
-}
+
 const getInfoDolar = async (res: any) => {
   try {
     const dataDolar = await axios.get("https://www.dolarsi.com/api/dolarSiInfo.xml")
@@ -21,8 +19,8 @@ const getInfoDolar = async (res: any) => {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse
 ) {
-  const cotizaciones = await getInfoDolar(res)
+  const cotizaciones: any = await getInfoDolar(res)
   res.status(200).json({ cotizaciones })
 }

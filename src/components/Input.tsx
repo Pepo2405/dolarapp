@@ -7,11 +7,18 @@ export default function Input() {
   const [value, setValue] = useState("")
 
   const onChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
-    setValue(target.value)
-    handleChange(target.value)
+    const regExp = /[a-zA-Z]/g;
+    const regex = /^[^.]*\.?(?!\.)[^.]*$/;
+
+    if (regExp.test(target.value)) return
+
+    const value = target.value.replace(",", ".").replace(" ", "")
+    if (!regex.test(value)) return
+    setValue(value)
+    handleChange(value)
   }
 
-  const changeType = (e) => {
+  const changeType = (e: any) => {
     setValue("")
     handleChange(0)
     setType(e.target.value)
@@ -31,18 +38,15 @@ export default function Input() {
           name="price"
           id="price"
           onChange={onChange}
-          value={value || ""}
-          className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-rose-600 sm:text-sm sm:leading-6 outline-none"
+          value={(value) || ""}
+          className="block w-full rounded-md border-0 py-3 pl-8 text-xl pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6 outline-none"
           placeholder="0.00"
         />
         <div className="absolute inset-y-0 right-0 flex items-center">
-          <label htmlFor="currency" className="sr-only">
-            Currency
-          </label>
           <select
             id="currency"
             name="currency"
-            className="h-full rounded-md border-0 outline-none bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-rose-700 sm:text-sm"
+            className="h-full rounded-md border-0 outline-none bg-transparent py-0 pl-2 pr-7 text-gray-500  focus:ring-inset focus:ring-0 sm:text-sm"
             onChange={changeType}
           >
             <option value={"usd"}>USD</option>

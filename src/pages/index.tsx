@@ -34,20 +34,18 @@ export default function Home({ data }: Data) {
 
   return (
     <ConverterProvider data={data}>
-      <main className='w-screen min-h-screen bg-rose-700 flex justify-center items-center'>
-        <Card values={{ dolar: 23, blue: 50 }} />
+      <main className='w-screen h-screen bg-gradient-to-tr from-sky-500 to-green-500 flex justify-center items-center'>
+        <Card />
       </main>
     </ConverterProvider>
   )
 }
 
-export const getServerSideProps = async (req: NextRequest, res: NextResponse) => {
+export const getServerSideProps = async (_req: NextRequest, _res: NextResponse) => {
   const { data } = await axios.get("http://localhost:3000/api/hello")
-  // console.log(data.cotizaciones[0])
   const info = {
     dolar: data.cotizaciones.find((el: cotizacion) => el.nombre._text.toLowerCase() === "oficial"),
     blue: data.cotizaciones.find((el: cotizacion) => el.nombre._text.toLowerCase() === "blue")
   }
-  console.log(info)
   return { props: { data: info } }
 }
