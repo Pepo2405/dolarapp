@@ -42,7 +42,7 @@ export default function Home({ data }: Data) {
 }
 
 export const getServerSideProps = async (_req: NextRequest, _res: NextResponse) => {
-  const { data } = await axios.get("http://localhost:3000/api/hello")
+  const { data } = await axios.get("/api/hello")
   const info = {
     dolar: data.cotizaciones.find((el: cotizacion) => el.nombre._text.toLowerCase() === "oficial"),
     blue: data.cotizaciones.find((el: cotizacion) => el.nombre._text.toLowerCase() === "blue")
